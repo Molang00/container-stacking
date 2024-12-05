@@ -4,49 +4,77 @@
         ["B", 1, 1],
         ["C", 2, 0],
         ["D", 2, 1],
-        ["E", 1, 2],
-        ["F", 2, 2]
+        ["E", 3, 0],
+        ["F", 3, 1]
     ],
-    "dimensions": [10, 10],
+    "dimensions": [4, 6],
     "shipments": [
         {
-            "duration": 1
+          "duration": 2
         },
         {
             "in": ["G", "H"],
-            "duration": 2
+            "duration": 3
         },
         {
             "out": ["A", "B"],
+            "duration": 4
+        },
+        {
+            "in": ["I", "J", "K"],
+            "duration": 5
+        },
+        {
+            "out": ["C"],
             "duration": 3
         },
         {
-            "in": ["I", "J"],
+            "in": ["L", "M"],
+            "duration": 3
+        },
+        {
+            "out": ["D", "E"],
+            "duration": 4
+        },
+        {
+            "in": ["N"],
+            "duration": 3
+        },
+        {
+            "out": ["F", "G"],
+            "duration": 4
+        },
+        {
+            "in": ["O", "P", "Q"],
+            "duration": 6
+        },
+        {
+            "out": ["H", "I"],
+            "duration": 3
+        },
+        {
+            "in": ["R", "S"],
+            "duration": 3
+        },
+        {
+            "out": ["J", "K"],
+            "duration": 4
+        },
+        {
+            "in": ["T"],
             "duration": 2
         },
         {
-            "out": ["C", "D"],
-            "duration": 3
+            "out": ["L", "M", "N"],
+            "duration": 4
         },
         {
-            "in": ["K", "L"],
-            "duration": 3
+            "in": ["U", "V", "W", "X"],
+            "duration": 7
         },
         {
-            "out": ["E", "F"],
-            "duration": 2
-        },
-        {
-            "in": ["M", "N", "O"],
-            "duration": 3
-        },
-        {
-            "out": ["G", "H"],
-            "duration": 2
-        },
-        {
-            "in": ["P", "Q", "R"],
-            "duration": 3
+            "out": ["O", "P"],
+            "duration": 4
         }
     ]
   }
