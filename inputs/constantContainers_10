@@ -1,0 +1,38 @@
+{
+  "containers": [
+      ["A", 1, 0],
+      ["B", 1, 1],
+      ["C", 2, 0],
+      ["D", 2, 1]
+  ],
+  "dimensions": [3, 5],
+  "shipments": [
+      {
+        "duration": 1
+      },
+      {
+          "in": ["E", "F"],
+          "duration": 2
+      },
+      {
+          "out": ["A"],
+          "duration": 3
+      },
+      {
+          "in": ["G"],
+          "duration": 2
+      },
+      {
+          "out": ["C", "D"],
+          "duration": 3
+      },
+      {
+          "in": ["H", "I"],
+          "duration": 2
+      },
+      {
+          "out": ["B", "E"],
+          "duration": 2
+      }
+  ]
+}

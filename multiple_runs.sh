@@ -1,7 +1,7 @@
 #!/bin/bash
 
 runs=5
-solvers=(ortools cplex)
+solvers=(ortools)
 test_file="inputs/constantContainers_"
 
 for solver in "${solvers[@]}"; do

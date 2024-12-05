@@ -2,6 +2,7 @@ import argparse
 import json
 from timeit import default_timer as timer
 from inspect import getmembers, isfunction
+import csv  # 추가된 모듈
 
 from numpy import number
 
@@ -101,8 +102,10 @@ def enforce_container_loading_restrictions(model : Model, matrix : ContainerMatr
     in_ = 0
     out = 0
     for shipment in shipments:
+        print(shipment)
         if "in" in shipment:
             in_ += len(shipment["in"])
+        if "out" in shipment:
             out += len(shipment["out"])
     
     model.Add(sum(matrix.insert) == in_)
@@ -211,6 +214,47 @@ def load_from_json(args : object, logs : bool = False, visualize : bool = True) 
             print('Solution time (s):', solution['time'])
             print('Objective value:', solution['objective'], 'OPTIMAL' if solution['status'] == model.OPTIMAL else '')
             matrix.print_solution(model, labels=labels)
+
+
+        # --- 컨테이너 이동 경로 출력 및 CSV 저장 ---
+        log_file = "movement_log.csv"
+        with open(log_file, mode="w", newline="") as csvfile:
+            log_writer = csv.writer(csvfile)
+            log_writer.writerow(["time", "container", "stack", "height", "status"]) 
+
+            print("\nContainer Movement Log:")
+            previous_positions = {}  # 이전 시간의 위치를 저장
+
+            for t in range(matrix.t):  # 시간 단위 반복
+                print(f"\nTime {t}: Container stacking status")  # 현재 시간 출력
+
+                stacking_status = [["." for _ in range(matrix.s)] for _ in range(matrix.h)]  # 적재 상태 초기화
+
+                for c in range(matrix.c):  # 각 컨테이너 반복
+                    current_position = None  # 현재 위치
+
+                    for s in range(matrix.s):  # 각 스택 반복
+                        for h in range(matrix.h):  # 스택 내 높이 반복
+                            if model.Value(matrix.get(t, c, s, h)) == 1:
+                                current_position = (s, h)  # 현재 위치 저장
+
+                                # 적재 상태 갱신
+                                stacking_status[h][s] = labels[c]  # 높이 h, 스택 s에 컨테이너 표시
+
+                                # CSV에 기록
+                                log_writer.writerow([t, labels[c], s, h, "idle"])
+                                print(f"At time {t}, Container {labels[c]} is at Stack {s}, Height {h}")
+
+                    # 현재 위치를 이전 위치로 업데이트
+                    if current_position:
+                        previous_positions[c] = current_position
+
+                # 적재 상태 출력
+                for row in reversed(stacking_status):  # 높이가 위에서 아래로 출력되도록 역순 출력
+                    print(" | ".join(row))
+        print(f"\nMovement log saved to {log_file}")
+
+
         if visualize:
             matrix.visualize(model, shipments, labels=labels)
 
