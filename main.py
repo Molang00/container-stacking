@@ -226,7 +226,7 @@ def load_from_json(args : object, logs : bool = False, visualize : bool = True) 
             previous_positions = {}  # 이전 시간의 위치를 저장
 
             for t in range(matrix.t):  # 시간 단위 반복
-                print(f"\nTime {t}: Container stacking status")  # 현재 시간 출력
+                # print(f"\nTime {t}: Container stacking status")  # 현재 시간 출력
 
                 stacking_status = [["." for _ in range(matrix.s)] for _ in range(matrix.h)]  # 적재 상태 초기화
 
@@ -243,15 +243,15 @@ def load_from_json(args : object, logs : bool = False, visualize : bool = True) 
 
                                 # CSV에 기록
                                 log_writer.writerow([t, labels[c], s, h, "idle"])
-                                print(f"At time {t}, Container {labels[c]} is at Stack {s}, Height {h}")
+                                # print(f"At time {t}, Container {labels[c]} is at Stack {s}, Height {h}")
 
                     # 현재 위치를 이전 위치로 업데이트
                     if current_position:
                         previous_positions[c] = current_position
 
                 # 적재 상태 출력
-                for row in reversed(stacking_status):  # 높이가 위에서 아래로 출력되도록 역순 출력
-                    print(" | ".join(row))
+                for row in stacking_status:  # 높이가 위에서 아래로 출력되도록 역순 출력
+                    print(" , ".join(row))
         print(f"\nMovement log saved to {log_file}")
 
 
